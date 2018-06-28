@@ -16,6 +16,7 @@ import (
 var alarmCommandFlag = flag.String("alarm-command", "",
 	"command to be executed when the alarm fires")
 var debugFlag = flag.Bool("debug", false, "print debug messages")
+var colorsFlag = flag.Bool("colors", false, "colored timer (requires: markup=pango)")
 
 func debug(args ...interface{}) {
 	if *debugFlag {
@@ -90,8 +91,27 @@ func (t *Timer) String() string {
 	if t.IsRunning() {
 		elapsed = time.Since(t.StartTime)
 	}
-	return fmt.Sprintf("Timer: %s",
-		(t.Duration - elapsed).Truncate(time.Duration(time.Second)))
+	markupStart := ""
+	markupEnd := ""
+	if *colorsFlag && t.IsRunning() {
+		// Get elapsed
+		r := t.Remaining()
+		if r < t.Duration/4 {
+			// If remaining is < 25% of duration, print it red
+			markupStart = "<span color='red'>"
+		} else if r < t.Duration/2 {
+			// If remaining is < 50% of duration, print it yellow
+			markupStart = "<span color='yellow'>"
+		} else if r > t.Duration/2 {
+			// If remaining is > 50% of duration, print it green
+			markupStart = "<span color='#00ff00'>"
+		}
+		markupEnd = "</span>"
+	}
+	return fmt.Sprintf("%sTimer: %s%s",
+		markupStart,
+		(t.Duration - elapsed).Truncate(time.Duration(time.Second)),
+		markupEnd)
 }
 
 // Save the content of the timer
