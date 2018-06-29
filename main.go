@@ -16,7 +16,7 @@ import (
 var alarmCommandFlag = flag.String("alarm-command", "",
 	"command to be executed when the alarm fires")
 var debugFlag = flag.Bool("debug", false, "print debug messages")
-var colorsFlag = flag.Bool("colors", false, "colored timer (requires: markup=pango)")
+var colorsFlag = flag.Bool("colors", false, "colorized timer")
 
 func debug(args ...interface{}) {
 	if *debugFlag {

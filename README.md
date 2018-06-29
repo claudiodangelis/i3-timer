@@ -21,7 +21,30 @@ interval=10
 
 Note: higher values for `interval` lead to poor timer accuracy.
 
+### Colors
+
+The `-colors` flag enables colored output. The config parameter`markup=pango` is required, for example:
+
+```ini
+[i3timer]
+command=~/go/bin/i3-timer...
+markup=pango
+interval=10
+```
+
+**Note**: if pango markup is not rendered, for example the output is something like `<span color="red">Timer: 5m0s</span>`, you will need to set `font pango:Monospace 10` to the `bar` section of the i3's configuration file.
+
+### Arguments
+
+| Argument | Type | Description |
+| -------- | ---- | ----------- |
+| `alarm-command` | String | Command(s) to be executed when the  alarm fires |
+| `-colors` | Boolean | Prints colorized timer |
+| `-debug` | Boolean | Prints debug information |
+
 ## Usage
+
+
 
 You can interact with the timer by clicking and/or using the scrollwheel.
 
