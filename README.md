@@ -32,6 +32,15 @@ markup=pango
 interval=10
 ```
 
+#### Color Codes
+
+| Color | Code |
+| ----- | ---- |
+| Green | Timer is in its first half |
+| Yellow | Timer is in its second half |
+| Red | Timer is in its last quarter |
+
+
 **Note**: if pango markup is not rendered, for example the output is something like `<span color="red">Timer: 5m0s</span>`, you will need to set `font pango:Monospace 10` to the `bar` section of the i3's configuration file.
 
 ### Arguments
