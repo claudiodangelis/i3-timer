@@ -36,6 +36,7 @@ interval=10
 
 | Color | Code |
 | ----- | ---- |
+| (default) | Timer is idle  |
 | Green | Timer is in its first half |
 | Yellow | Timer is in its second half |
 | Red | Timer is in its last quarter |
