@@ -20,7 +20,7 @@ var colorsFlag = flag.Bool("colors", false, "colorized timer")
 
 func debug(args ...interface{}) {
 	if *debugFlag {
-		log.Println(args)
+		log.Println(args...)
 	}
 }
 
