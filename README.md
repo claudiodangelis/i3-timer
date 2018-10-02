@@ -60,7 +60,7 @@ You can interact with the timer by clicking and/or using the scrollwheel.
 
 | Event | Outcome |
 | ----- | ------- |
-| Left Click | _(does nothing for now, will toggle elapsed/remaining time)_
+| Left Click | Toggles between elapsed/remaining time |
 | Middle Click | Starts the timer |
 | Right Click | Stops and resets the timer |
 | Scroll Up | Adjusts the timer to add one minute |
