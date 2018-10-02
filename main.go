@@ -26,8 +26,9 @@ func debug(args ...interface{}) {
 
 // Timer holds data of the current timer
 type Timer struct {
-	Duration  time.Duration `json:"duration"`
-	StartTime time.Time     `json:"startTime"`
+	Duration    time.Duration `json:"duration"`
+	StartTime   time.Time     `json:"startTime"`
+	ShowElapsed bool          `json:"showElapsed"`
 }
 
 // Remaining returns the remaining duration
@@ -85,6 +86,17 @@ func (t *Timer) Reset() {
 	t.Save()
 }
 
+// ToggleView will toggle between showing elapsed and remaining time.
+func (t *Timer) ToggleView() {
+	if t.ShowElapsed {
+		t.ShowElapsed = false
+	} else {
+		t.ShowElapsed = true
+	}
+
+	t.Save()
+}
+
 // String formats the timer
 func (t *Timer) String() string {
 	var elapsed time.Duration
@@ -108,9 +120,18 @@ func (t *Timer) String() string {
 		}
 		markupEnd = "</span>"
 	}
+
+	// Default to showing remaining time.
+	timerValue := (t.Duration - elapsed).Truncate(time.Duration(time.Second))
+
+	// Show elapsed if timer have been toggled.
+	if t.ShowElapsed {
+		timerValue = elapsed.Truncate(time.Duration(time.Second))
+	}
+
 	return fmt.Sprintf("%sTimer: %s%s",
 		markupStart,
-		(t.Duration - elapsed).Truncate(time.Duration(time.Second)),
+		timerValue,
 		markupEnd)
 }
 
@@ -184,7 +205,10 @@ func main() {
 	}
 	switch Button(os.Getenv("BLOCK_BUTTON")) {
 	case LeftButton:
-		// NOT IMPLEMENTED YET (should toggle elapsed/remaining)
+		// Toggle elapsed/remaining.
+		if timer.IsRunning() {
+			timer.ToggleView()
+		}
 	case MiddleButton:
 		// Start the timer if not started yet
 		if time.Time.IsZero(timer.StartTime) {
