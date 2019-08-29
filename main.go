@@ -17,6 +17,9 @@ var alarmCommandFlag = flag.String("alarm-command", "",
 	"command to be executed when the alarm fires")
 var debugFlag = flag.Bool("debug", false, "print debug messages")
 var colorsFlag = flag.Bool("colors", false, "colorized timer")
+var autostartFlag = flag.Bool("autostart", false, "start timer automatically")
+var recurrentFlag = flag.Bool("recurrent", false, "re-start timer after alarm")
+var durationFlag = flag.Int("duration", 5, "default duration in minutes")
 
 func debug(args ...interface{}) {
 	if *debugFlag {
@@ -83,6 +86,12 @@ func (t *Timer) Alarm() {
 // Reset the timer
 func (t *Timer) Reset() {
 	t.StartTime = time.Time{}
+	t.Save()
+}
+
+// Start the timer
+func (t *Timer) Start() {
+	t.StartTime = time.Now()
 	t.Save()
 }
 
@@ -163,7 +172,7 @@ func LoadTimer() (Timer, error) {
 	configFile := filepath.Join(currentUser.HomeDir, ".i3-timer.json")
 	// If config file does not exist yet, create a default one
 	if _, err := os.Stat(configFile); os.IsNotExist(err) {
-		t.Duration = time.Duration(5 * time.Minute)
+		t.Duration = time.Duration(*durationFlag) * time.Minute
 		j, err := json.Marshal(t)
 		if err != nil {
 			return t, err
@@ -212,8 +221,7 @@ func main() {
 	case MiddleButton:
 		// Start the timer if not started yet
 		if time.Time.IsZero(timer.StartTime) {
-			timer.StartTime = time.Now()
-			timer.Save()
+			timer.Start()
 		}
 	case RightButton:
 		// Stop the timer if it's started
@@ -232,6 +240,13 @@ func main() {
 	if timer.IsRunning() && timer.Remaining() <= 0 {
 		timer.Alarm()
 		timer.Reset()
+		if *recurrentFlag {
+			timer.Start()
+		}
 	}
+	if !timer.IsRunning() && *autostartFlag {
+		timer.Start()
+	}
+
 	fmt.Println(timer.String())
 }
