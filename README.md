@@ -48,7 +48,7 @@ interval=10
 
 | Argument | Type | Description |
 | -------- | ---- | ----------- |
-| `alarm-command` | String | Command(s) to be executed when the  alarm fires |
+| `-alarm-command` | String | Command(s) to be executed when the  alarm fires |
 | `-colors` | Boolean | Prints colorized timer |
 | `-debug` | Boolean | Prints debug information |
 | `-recurring` | Boolean | Restarts timer after the alarm fires |
