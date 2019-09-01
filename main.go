@@ -64,8 +64,8 @@ func (t *Timer) AddMinute() {
 	t.Save()
 }
 
-// RemoveMinute removes one minute from the duration of the timer
-func (t *Timer) RemoveMinute() {
+// SubtractMinute removes one minute from the duration of the timer
+func (t *Timer) SubtractMinute() {
 	if t.Duration > time.Duration(0) {
 		t.Duration -= time.Duration(time.Minute)
 		if t.Duration < 0 {
@@ -234,7 +234,7 @@ func main() {
 		}
 	case ScrollDownButton:
 		if timer.IsNotRunning() {
-			timer.RemoveMinute()
+			timer.SubtractMinute()
 		}
 	}
 	if timer.IsRunning() && timer.Remaining() <= 0 {
