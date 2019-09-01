@@ -43,11 +43,6 @@ func (t *Timer) Remaining() time.Duration {
 	return (t.Duration - elapsed).Truncate(time.Duration(time.Second))
 }
 
-// IsLessThanOneMinute returns true if more than one minute is still missing
-func (t *Timer) IsLessThanOneMinute() bool {
-	return time.Since(t.StartTime)-t.Duration < time.Minute
-}
-
 // IsRunning check if the timer is running
 func (t *Timer) IsRunning() bool {
 	return !time.Time.IsZero(t.StartTime)
