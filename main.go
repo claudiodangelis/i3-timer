@@ -18,7 +18,7 @@ var alarmCommandFlag = flag.String("alarm-command", "",
 var debugFlag = flag.Bool("debug", false, "print debug messages")
 var colorsFlag = flag.Bool("colors", false, "colorized timer")
 var autostartFlag = flag.Bool("autostart", false, "start timer automatically")
-var recurrentFlag = flag.Bool("recurrent", false, "re-start timer after alarm")
+var recurringFlag = flag.Bool("recurring", false, "restart timer after alarm")
 var durationFlag = flag.Int("duration", 5, "default duration in minutes")
 
 func debug(args ...interface{}) {
@@ -240,7 +240,7 @@ func main() {
 	if timer.IsRunning() && timer.Remaining() <= 0 {
 		timer.Alarm()
 		timer.Reset()
-		if *recurrentFlag {
+		if *recurringFlag {
 			timer.Start()
 		}
 	}
