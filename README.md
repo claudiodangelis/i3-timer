@@ -52,7 +52,7 @@ interval=10
 | `-colors` | Boolean | Prints colorized timer |
 | `-debug` | Boolean | Prints debug information |
 | `-recurring` | Boolean | Restarts timer after the alarm fires |
-| `-duration` | Integer | Sets the default duration of the timer |
+| `-duration` | Integer | Sets the default duration, in minutes, of the timer |
 | `-autostart` | Boolean | Starts the timer as soon as i3 starts |
 
 ## Usage
