@@ -51,6 +51,9 @@ interval=10
 | `alarm-command` | String | Command(s) to be executed when the  alarm fires |
 | `-colors` | Boolean | Prints colorized timer |
 | `-debug` | Boolean | Prints debug information |
+| `-recurring` | Boolean | Restarts timer after the alarm fires |
+| `-duration` | Integer | Sets the default duration of the timer |
+| `-autostart` | Boolean | Starts the timer as soon as i3 starts |
 
 ## Usage
 
@@ -77,7 +80,7 @@ You can execute whatever program(s) you like.
 
 ## Credits
 
-The original author and current maintainer is [Claudio d'Angelis](https://github.com/claudiodangelis). Contributions are always welcome.
+The original author and current maintainer is [Claudio d'Angelis](https://github.com/claudiodangelis). Refer to [contributors page](https://github.com/claudiodangelis/i3-timer/graphs/contributors) for a full list of people who have contributed to this project. Contributions are always welcome.
 
 
 ## License 
