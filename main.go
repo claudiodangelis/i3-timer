@@ -81,6 +81,7 @@ func (t *Timer) Alarm() {
 // Reset the timer
 func (t *Timer) Reset() {
 	t.StartTime = time.Time{}
+	t.Duration = time.Duration(*durationFlag) * time.Minute
 	t.Save()
 }
 
