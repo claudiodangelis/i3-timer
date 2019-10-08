@@ -44,6 +44,14 @@ interval=10
 
 **Note**: if pango markup is not rendered, for example the output is something like `<span color="red">Timer: 5m0s</span>`, you will need to set `font pango:Monospace 10` to the `bar` section of the i3's configuration file.
 
+#### Status label
+
+| Label | Status |
+| ----- | ------ |
+| `[I]` | Timer is idle |
+| `[R]` | Timer is showing remaining time |
+| `[E]` | Timer is showing elapsed time |
+
 ### Arguments
 
 | Argument | Type | Description |

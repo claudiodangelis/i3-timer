@@ -128,15 +128,23 @@ func (t *Timer) String() string {
 
 	// Default to showing remaining time.
 	timerValue := (t.Duration - elapsed).Truncate(time.Duration(time.Second))
-
+	// Status string
+	status := "I"
+	if t.IsRunning() {
+		status = "R"
+		if t.ShowElapsed {
+			status = "E"
+		}
+	}
 	// Show elapsed if timer have been toggled.
 	if t.ShowElapsed {
 		timerValue = elapsed.Truncate(time.Duration(time.Second))
 	}
 
-	return fmt.Sprintf("%sTimer: %s%s",
+	return fmt.Sprintf("%sTimer: %s [%s]%s",
 		markupStart,
 		timerValue,
+		status,
 		markupEnd)
 }
 
