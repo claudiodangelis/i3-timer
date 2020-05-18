@@ -116,7 +116,7 @@ The following example will bind the start of timer to **Mod1+Shift+Control+k** (
     ```
 
 4. Create the keyboard shortcut binding in i3 configuration file
-    ```ini
+    ```sh
     # start timer
     bindsym --release Mod1+Shift+Control+k exec bash -c "pkill -SIGRTMIN+10 i3blocks && pkill -SIGRTMIN+12 i3blocks"
     # stop timer
