@@ -21,6 +21,10 @@ var autostartFlag = flag.Bool("autostart", false, "start timer automatically")
 var recurringFlag = flag.Bool("recurring", false, "restart timer after alarm")
 var durationFlag = flag.Int("duration", 5, "default duration in minutes")
 
+// exec commands
+var execStartFlag = flag.Bool("exec-start", false, "start the timer")
+var execStopFlag = flag.Bool("exec-stop", false, "stop the timer")
+
 func debug(args ...interface{}) {
 	if *debugFlag {
 		log.Println(args...)
@@ -215,6 +219,20 @@ func main() {
 	timer, err := LoadTimer()
 	if err != nil {
 		panic(err)
+	}
+	// Check if an exec command has been passed
+	// Start the timer if `-exec-start` is passed
+	if *execStartFlag {
+		if time.Time.IsZero(timer.StartTime) {
+			timer.Start()
+		}
+		return
+	}
+	if *execStopFlag {
+		if timer.IsRunning() {
+			timer.Reset()
+		}
+		return
 	}
 	switch Button(os.Getenv("BLOCK_BUTTON")) {
 	case LeftButton:

@@ -78,10 +78,52 @@ You can interact with the timer by clicking and/or using the scrollwheel.
 | Scroll Down | Adjusts the timer to remove one minute |
 
 
+
 If passed, the value of `-alarm-command` will be executed when the timer runs out. In the example above the value is `notify-send 'i3-timer' 'Alarm Elapsed!'; play /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga`, which will pop up a notification on the top right corner of the screen and play a sound.
 
 You can execute whatever program(s) you like.
 
+## Key Bindings
+
+You can setup key bindings to start and stop the timer by using i3blocks' [signaling](https://github.com/vivien/i3blocks#signal) feature. What you should do is to create 2 additional blocks with no `interval` property but set the proper `signal` value for the blocks, then set i3 configuration to bind the emission of the given signals to a keyboard shortcut.
+
+The following example will bind the start of timer to **Mod1+Shift+Control+k** (which will emit, for example, signal `10`) and the stop to **Mod1+Shift+Control+l** (which will emit, for example, signal `11`). After emitting signal `10` or `11`, both key shortcuts will emit signal `12` that will refresh the timer's "gui".
+
+
+1. Create the main block to configure the timer in i3blocks configuration file:
+
+    ```ini
+    [i3timer]
+    command=~/go/bin/i3-timer -alarm-command="notify-send 'i3-timer' 'Alarm Elapsed!'; play /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga"
+    interval=10
+    signal=12
+    ```
+
+2. Create the "start timer" block  in i3blocks configuration file
+
+    ```ini
+    [i3timer]
+    command=~/go/bin/i3-timer -exec-start
+    signal=10
+    ```
+
+3. Create the "stop timer" block  in i3blocks configuration file
+
+    ```ini
+    [i3timer]
+    command=~/go/bin/i3-timer -exec-stop
+    signal=11
+    ```
+
+4. Create the keyboard shortcut binding in i3 configuration file
+    ```ini
+    # start timer
+    bindsym --release Mod1+Shift+Control+k exec bash -c "pkill -SIGRTMIN+10 i3blocks && pkill -SIGRTMIN+12 i3blocks"
+    # stop timer
+    bindsym --release Mod1+Shift+Control+l exec bash -c "pkill -SIGRTMIN+11 i3blocks && pkill -SIGRTMIN+12 i3blocks"
+    ```
+
+5. Restart i3 and enjoy
 
 **Note**: `i3-timer` stores timer's data into a hidden JSON file, `.i3-timer.json` stored at your home directory.
 
